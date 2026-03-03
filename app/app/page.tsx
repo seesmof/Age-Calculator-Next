@@ -8,12 +8,22 @@ export default function Home() {
 
   const calculateAge = () => {
     const [birthYear, birthMonth, birthDay] = date.split("-");
+    const birth = new Date(date);
 
     const currentDate = new Date();
     const formattedDate = currentDate.toLocaleDateString("en-CA");
     const [currentYear, currentMonth, currentDay] = formattedDate.split("-");
 
-    const thisAge = Number.parseInt(currentYear) - Number.parseInt(birthYear);
+    let thisAge = Number.parseInt(currentYear) - Number.parseInt(birthYear);
+    const monthDiff =
+      Number.parseInt(currentMonth) - Number.parseInt(birthMonth);
+
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && currentDate.getDate() < birth.getDate())
+    )
+      thisAge--;
+
     setAge(thisAge.toString());
   };
 
